@@ -172,7 +172,7 @@ const displayModalData = data =>{
             </div>
             <div class="text-center">
             <h4>${data.input_output_examples && data.input_output_examples[0] && data.input_output_examples[0].input !== null ? data.input_output_examples[0].input : "NO Data Found"}</h4>
-            <h5>${data.input_output_examples && data.input_output_examples[1] && data.input_output_examples[1].output !== null ? data.input_output_examples[1].output : "NO Data Found"}</h5>
+            <h5>${data.input_output_examples && data.input_output_examples[0] && data.input_output_examples[0].output !== null ? data.input_output_examples[0].output : "NO Data Found"}</h5>
             </div>
         </div>
     `
