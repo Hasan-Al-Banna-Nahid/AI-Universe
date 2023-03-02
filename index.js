@@ -16,15 +16,20 @@ const showSixData = data => {
     const parentCards = document.getElementById("cards");
     data.forEach(singleData => {
         console.log(singleData);
-        const {image} = singleData;
+        const {image,features,name} = singleData;
         const childDiv = document.createElement("div");
         childDiv.innerHTML = `
         <div class="col">
               <div class="card">
                 <img src="${image}" class="card-img-top" alt="...">
                 <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                  <h5 class="card-title text-center">${name}</h5>
+                  <h5 class="card-title text-center">Features</h5>
+                  <ol class = "mx-auto">
+                  <li>${features[0]}</li>
+                  <li>${features[1]}</li>
+                  <li>${features[2]}</li>
+                  </ol>
                 </div>
               </div>
             </div>
