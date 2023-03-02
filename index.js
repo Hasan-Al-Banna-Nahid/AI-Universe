@@ -16,6 +16,7 @@ const showSixData = data => {
     const parentCards = document.getElementById("cards");
     parentCards.innerHTML = '';
     data.forEach(singleData => {
+        console.log(singleData);
         const {image,features,name,published_in} = singleData;
         const apiDate = { date: published_in };
         const dateString = apiDate["date"];
@@ -46,7 +47,7 @@ const showSixData = data => {
                     </div>
                     </div>
                     <div>
-                    <i class="fa-solid fa-arrow-right"></i>
+                    <button class="rounded p-3 btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-arrow-right" ></i></button>
                     </div>
                   </div>
                 </div>
@@ -56,6 +57,9 @@ const showSixData = data => {
         parentCards.appendChild(childDiv);
     });
 }
+document.getElementById("see-more-btn").addEventListener("click",function(){
+    document.getElementById("see-more-btn").style.display = "none";
+})
 // Load six Data And Showing Them In cards End
 
 
@@ -105,7 +109,7 @@ const showAllData = data =>{
                     </div>
                     </div>
                     <div>
-                    <i class="fa-solid fa-arrow-right"></i>
+                    <button class="rounded p-3 btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-arrow-right" ></i></button>
                     </div>
                   </div>
                 </div>
@@ -116,3 +120,7 @@ const showAllData = data =>{
     });
 }
 // Load All Data And Showing Them In cards End
+
+// Showing Modal
+
+  
