@@ -16,8 +16,7 @@ const showSixData = data => {
     const parentCards = document.getElementById("cards");
     parentCards.innerHTML = '';
     data.forEach(singleData => {
-        console.log(singleData);
-        const {image,features,name,published_in} = singleData;
+        const {image,features,name,published_in,id} = singleData;
         const apiDate = { date: published_in };
         const dateString = apiDate["date"];
         const date = new Date(dateString);
@@ -35,7 +34,7 @@ const showSixData = data => {
                   <ol class = "mx-auto">
                   <li>${features[0]}</li>
                   <li>${features[1]}</li>
-                  <li>${features[2]}</li>
+                  <li>${singleData.features && singleData.features.length > 2?singleData.features[2]:"No Data Found"}</li>
                   </ol>
                   <hr>
                   <div class="d-flex justify-content-between">
@@ -47,7 +46,7 @@ const showSixData = data => {
                     </div>
                     </div>
                     <div>
-                    <button class="rounded p-3 btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-arrow-right" ></i></button>
+                    <button onclick="loadModalData('${id}')" class="rounded p-3 btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-arrow-right" ></i></button>
                     </div>
                   </div>
                 </div>
@@ -79,7 +78,7 @@ const showAllData = data =>{
     const parentCards = document.getElementById("cards");
     parentCards.innerHTML = '';
     data.forEach(singleData => {
-        const {image,features,name,published_in} = singleData;
+        const {image,features,name,published_in,id} = singleData;
         const apiDate = { date: published_in };
         const dateString = apiDate["date"];
         const date = new Date(dateString);
@@ -97,7 +96,7 @@ const showAllData = data =>{
                   <ol class = "mx-auto">
                   <li>${features[0]}</li>
                   <li>${features[1]}</li>
-                  <li>${features[2]}</li>
+                  <li>${singleData.features && singleData.features.length > 2?singleData.features[2]:"No Data Found"}</li>
                   </ol>
                   <hr>
                   <div class="d-flex justify-content-between">
@@ -109,7 +108,7 @@ const showAllData = data =>{
                     </div>
                     </div>
                     <div>
-                    <button class="rounded p-3 btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-arrow-right" ></i></button>
+                    <button onclick="loadModalData('${id}')" class="rounded p-3 btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-arrow-right" ></i></button>
                     </div>
                   </div>
                 </div>
@@ -122,5 +121,47 @@ const showAllData = data =>{
 // Load All Data And Showing Them In cards End
 
 // Showing Modal
+const loadModalData = async(id) =>{
+    const url = `https://openapi.programming-hero.com/api/ai/tool/${id}`
+    try{
+        const res = await fetch(url)
+        const data = await res.json();
+        displayModalData(data.data);
+    }catch(err){
+        console.log(err);
+    }
+}
 
-  
+const displayModalData = data =>{
+    console.log(data);
+    document.getElementById("exampleModalLabel").innerText = `${data.tool_name}`;
+    const modalLeftPart = document.getElementById("modalLeftPart");
+    modalLeftPart.innerHTML = `
+    <h3>${data.description?data.description:"No Data Found"}</h3>
+    <div class="d-flex justify-content-around align-items-center">
+        <button class="btn btn-danger">${data.pricing[0].price?data.pricing[0].price:""} </br> ${data.pricing[0].plan}</button>
+        <button class="btn btn-success">${data.pricing[1].price} </br> ${data.pricing[1].plan}</button>
+        <button class="btn btn-warning">${data.pricing[2].price} </br> ${data.pricing[2].plan}</button>
+    </div>
+    <div class="d-flex justify-content-between align-items-center">
+    <div>
+    <h4 class="my-2">Features</h4>
+    <ul class="my-2">
+        <li>${data.features['1'].feature_name}</li>
+        <li>${data.features['2'].feature_name}</li>
+        <li>${data.features['3'].feature_name}</li>
+    </ul>
+    </div>
+    <div>
+    <h4 class="my-2">Integrations</h4>
+    <ul class="my-2">
+        <li>${data.integrations[0]}</li>
+        <li>${data.integrations[1]?data.integrations[1]:"No Data Found"}</li>
+        <li>${data.integrations[2]?data.integrations[2]:"No Data Found"}</li>
+    </ul>
+    </div>
+    </div>
+    </div>
+    `
+    
+}
