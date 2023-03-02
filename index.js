@@ -139,9 +139,9 @@ const displayModalData = data =>{
     modalLeftPart.innerHTML = `
     <h3>${data.description?data.description:"No Data Found"}</h3>
     <div class="d-flex justify-content-around align-items-center">
-        <button class="btn btn-danger">${data.pricing[0].price?data.pricing[0].price:""} </br> ${data.pricing[0].plan}</button>
-        <button class="btn btn-success">${data.pricing[1].price} </br> ${data.pricing[1].plan}</button>
-        <button class="btn btn-warning">${data.pricing[2].price} </br> ${data.pricing[2].plan}</button>
+        <button class="btn btn-danger">${data.pricing && data.pricing[0] && data.pricing[0].price !== null ? data.pricing[0].price : "NO Data Found"} </br> ${data.pricing && data.pricing[0] && data.pricing[0].plan ? data.pricing[0].plan : "No Data Found"} </button>
+        <button class="btn btn-success">${data.pricing && data.pricing[1] && data.pricing[1].price !== null ? data.pricing[1].price : "NO Data Found"} </br> ${data.pricing && data.pricing[1] && data.pricing[1].plan ? data.pricing[1].plan : "No Data Found"}</button>
+        <button class="btn btn-warning">${data.pricing && data.pricing[2] && data.pricing[2].price !== null ? data.pricing[2].price : "NO Data Found"} </br> ${data.pricing && data.pricing[2] && data.pricing[2].plan ? data.pricing[2].plan : "No Data Found"}</button>
     </div>
     <div class="d-flex justify-content-between align-items-center">
     <div>
@@ -155,13 +155,26 @@ const displayModalData = data =>{
     <div>
     <h4 class="my-2">Integrations</h4>
     <ul class="my-2">
-        <li>${data.integrations[0]}</li>
-        <li>${data.integrations[1]?data.integrations[1]:"No Data Found"}</li>
-        <li>${data.integrations[2]?data.integrations[2]:"No Data Found"}</li>
+        <li>${data.integrations && data.integrations[0] !== null ? data.integrations[0] : "No Data Found"}</li>
+        <li>${data.integrations && data.integrations[1] !== null ? data.integrations[1] : "No Data Found"}</li>
+        <li>${data.integrations && data.integrations[2] !== null ? data.integrations[2] : "No Data Found"}</li>
     </ul>
     </div>
     </div>
     </div>
+    `;
+
+    const modalRightPart = document.getElementById("modalrightPart");
+    modalRightPart.innerHTML = `
+        <div>
+            <div>
+                <img class="img-fluid" src = "${data.image_link[0]}">
+            </div>
+            <div class="text-center">
+            <h4>${data.input_output_examples && data.input_output_examples[0] && data.input_output_examples[0].input !== null ? data.input_output_examples[0].input : "NO Data Found"}</h4>
+            <h5>${data.input_output_examples && data.input_output_examples[1] && data.input_output_examples[1].output !== null ? data.input_output_examples[1].output : "NO Data Found"}</h5>
+            </div>
+        </div>
     `
     
 }
