@@ -200,19 +200,3 @@ const toggleSpinner = isLoading =>{
         spinner.classList.add("d-none");
     }
 }
-// Sorting  By Date
-document.getElementById("sort-by-date").addEventListener("click",function(){
-    url = `https://openapi.programming-hero.com/api/ai/tools`;
-    fetch(url)
-    .then(res=>res.json())
-    .then((data)=>{
-        console.log(data);
-        const dataArray = Object.values(data);
-        dataArray.sort((a, b) => new Date(b.published_in) - new Date(a.published_in));
-        displaySortingData(data);
-    })
-    .catch(err=>console.log(err));
-    
-})
-const displaySortingData = data =>{
-}
