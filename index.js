@@ -3,6 +3,7 @@ const loadSixData = async () => {
     const url = `https://openapi.programming-hero.com/api/ai/tools`;
     try {
         const res = await fetch(url);
+        toggleSpinner(true)
         const data = await res.json();
         showSixData(data.data.tools.slice(0,6));
     } catch (err) {
@@ -12,7 +13,7 @@ const loadSixData = async () => {
 loadSixData();
 
 const showSixData = data => {
-
+    
     const parentCards = document.getElementById("cards");
     parentCards.innerHTML = '';
     data.forEach(singleData => {
@@ -54,7 +55,9 @@ const showSixData = data => {
             </div>
         `
         parentCards.appendChild(childDiv);
+        
     });
+    toggleSpinner(false)
 }
 document.getElementById("see-more-btn").addEventListener("click",function(){
     document.getElementById("see-more-btn").style.display = "none";
@@ -64,17 +67,20 @@ document.getElementById("see-more-btn").addEventListener("click",function(){
 
 // Load All Data And Showing Them In cards Start
 const loadAllData = async () =>{
+    toggleSpinner(true)
     const url = `https://openapi.programming-hero.com/api/ai/tools`;
     try{
         const res = await fetch(url);
         const data = await res.json();
         showAllData(data.data.tools);
+        
     }catch(err){
         console.log(err);
     }
 }
 
 const showAllData = data =>{
+    
     const parentCards = document.getElementById("cards");
     parentCards.innerHTML = '';
     data.forEach(singleData => {
@@ -117,7 +123,9 @@ const showAllData = data =>{
         `
         parentCards.appendChild(childDiv);
     });
+    toggleSpinner(false)
 }
+
 // Load All Data And Showing Them In cards End
 
 // Showing Modal
@@ -133,7 +141,6 @@ const loadModalData = async(id) =>{
 }
 
 const displayModalData = data =>{
-    console.log(data);
     document.getElementById("exampleModalLabel").innerText = `${data.tool_name}`;
     const modalLeftPart = document.getElementById("modalLeftPart");
     modalLeftPart.innerHTML = `
@@ -156,8 +163,8 @@ const displayModalData = data =>{
     <h4 class="my-2">Integrations</h4>
     <ul class="my-2">
         <li>${data.integrations && data.integrations[0] !== null ? data.integrations[0] : "No Data Found"}</li>
-        <li>${data.integrations && data.integrations[1] !== null ? data.integrations[1] : "No Data Found"}</li>
-        <li>${data.integrations && data.integrations[2] !== null ? data.integrations[2] : "No Data Found"}</li>
+        <li>${data.integrations?.[1] ?? "No Data Found"}</li>
+        <li>${data.integrations?.[2] ?? "No Data Found"}</li>
     </ul>
     </div>
     </div>
@@ -177,4 +184,30 @@ const displayModalData = data =>{
         </div>
     `
     
+}
+// Spinner
+const toggleSpinner = isLoading =>{
+    const spinner = document.getElementById("loader");
+    if(isLoading){
+        spinner.classList.remove("d-none");
+    }
+    else{
+        spinner.classList.add("d-none");
+    }
+}
+// Sorting  By Date
+document.getElementById("sort-by-date").addEventListener("click",function(){
+    url = `https://openapi.programming-hero.com/api/ai/tools`;
+    fetch(url)
+    .then(res=>res.json())
+    .then((data)=>{
+        console.log(data);
+        const dataArray = Object.values(data);
+        dataArray.sort((a, b) => new Date(b.published_in) - new Date(a.published_in));
+        displaySortingData(data);
+    })
+    .catch(err=>console.log(err));
+    
+})
+const displaySortingData = data =>{
 }
