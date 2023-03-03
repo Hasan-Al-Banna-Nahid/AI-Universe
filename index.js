@@ -141,6 +141,7 @@ const loadModalData = async(id) =>{
 }
 
 const displayModalData = data =>{
+    console.log(data.accuracy.score);
     document.getElementById("exampleModalLabel").innerText = `${data.tool_name}`;
     const modalLeftPart = document.getElementById("modalLeftPart");
     modalLeftPart.innerHTML = `
@@ -176,6 +177,10 @@ const displayModalData = data =>{
         <div>
             <div>
                 <img class="img-fluid" src = "${data.image_link[0]}">
+                <button type="button" class="btn btn-warning text-bg-secondary-subtle badge-btn">
+                    ${data.accuracy.score?data.accuracy.score + ' % Accuracy':"No Data Found"} 
+                </button>
+                
             </div>
             <div class="text-center">
             <h4>${data.input_output_examples && data.input_output_examples[0] && data.input_output_examples[0].input !== null ? data.input_output_examples[0].input : "NO Data Found"}</h4>
