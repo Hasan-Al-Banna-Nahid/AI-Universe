@@ -5,7 +5,7 @@ const loadSixData = async () => {
         const res = await fetch(url);
         toggleSpinner(true)
         const data = await res.json();
-        showSixData(data.data.tools.slice(0,6));
+        showSixData(data.data.tools.slice(0, 6));
     } catch (err) {
         console.log(err);
     }
@@ -13,11 +13,11 @@ const loadSixData = async () => {
 loadSixData();
 
 const showSixData = data => {
-    
+
     const parentCards = document.getElementById("cards");
     parentCards.innerHTML = '';
     data.forEach(singleData => {
-        const {image,features,name,published_in,id} = singleData;
+        const { image, features, name, published_in, id } = singleData;
         const apiDate = { date: published_in };
         const dateString = apiDate["date"];
         const date = new Date(dateString);
@@ -35,7 +35,7 @@ const showSixData = data => {
                   <ol class = "mx-auto">
                   <li>${features[0]}</li>
                   <li>${features[1]}</li>
-                  <li>${singleData.features && singleData.features.length > 2?singleData.features[2]:"No Data Found"}</li>
+                  <li>${singleData.features && singleData.features.length > 2 ? singleData.features[2] : "No Data Found"}</li>
                   </ol>
                   <hr>
                   <div class="d-flex justify-content-between">
@@ -55,36 +55,36 @@ const showSixData = data => {
             </div>
         `
         parentCards.appendChild(childDiv);
-        
+
     });
     toggleSpinner(false)
 }
-document.getElementById("see-more-btn").addEventListener("click",function(){
+document.getElementById("see-more-btn").addEventListener("click", function () {
     document.getElementById("see-more-btn").style.display = "none";
 })
 // Load six Data And Showing Them In cards End
 
 
 // Load All Data And Showing Them In cards Start
-const loadAllData = async () =>{
+const loadAllData = async () => {
     toggleSpinner(true)
     const url = `https://openapi.programming-hero.com/api/ai/tools`;
-    try{
+    try {
         const res = await fetch(url);
         const data = await res.json();
         showAllData(data.data.tools);
-        
-    }catch(err){
+
+    } catch (err) {
         console.log(err);
     }
 }
 
-const showAllData = data =>{
-    
+const showAllData = data => {
+
     const parentCards = document.getElementById("cards");
     parentCards.innerHTML = '';
     data.forEach(singleData => {
-        const {image,features,name,published_in,id} = singleData;
+        const { image, features, name, published_in, id } = singleData;
         const apiDate = { date: published_in };
         const dateString = apiDate["date"];
         const date = new Date(dateString);
@@ -102,7 +102,7 @@ const showAllData = data =>{
                   <ol class = "mx-auto">
                   <li>${features[0]}</li>
                   <li>${features[1]}</li>
-                  <li>${singleData.features && singleData.features.length > 2?singleData.features[2]:"No Data Found"}</li>
+                  <li>${singleData.features && singleData.features.length > 2 ? singleData.features[2] : "No Data Found"}</li>
                   </ol>
                   <hr>
                   <div class="d-flex justify-content-between">
@@ -129,23 +129,23 @@ const showAllData = data =>{
 // Load All Data And Showing Them In cards End
 
 // Showing Modal
-const loadModalData = async(id) =>{
+const loadModalData = async (id) => {
     const url = `https://openapi.programming-hero.com/api/ai/tool/${id}`
-    try{
+    try {
         const res = await fetch(url)
         const data = await res.json();
         displayModalData(data.data);
-    }catch(err){
+    } catch (err) {
         console.log(err);
     }
 }
 
-const displayModalData = data =>{
+const displayModalData = data => {
     console.log(data.accuracy.score);
     document.getElementById("exampleModalLabel").innerText = `${data.tool_name}`;
     const modalLeftPart = document.getElementById("modalLeftPart");
     modalLeftPart.innerHTML = `
-    <h3>${data.description?data.description:"No Data Found"}</h3>
+    <h3>${data.description ? data.description : "No Data Found"}</h3>
     <div class="d-flex justify-content-around align-items-center">
         <button class="btn btn-danger">${data.pricing && data.pricing[0] && data.pricing[0].price !== null ? data.pricing[0].price : "NO Data Found"} </br> ${data.pricing && data.pricing[0] && data.pricing[0].plan ? data.pricing[0].plan : "No Data Found"} </button>
         <button class="btn btn-success">${data.pricing && data.pricing[1] && data.pricing[1].price !== null ? data.pricing[1].price : "NO Data Found"} </br> ${data.pricing && data.pricing[1] && data.pricing[1].plan ? data.pricing[1].plan : "No Data Found"}</button>
@@ -178,7 +178,7 @@ const displayModalData = data =>{
             <div>
                 <img class="img-fluid" src = "${data.image_link[0]}">
                 <button type="button" class="btn btn-warning text-bg-secondary-subtle badge-btn">
-                    ${data.accuracy.score?data.accuracy.score + ' % Accuracy':"No Data Found"} 
+                    ${data.accuracy.score ? data.accuracy.score + ' % Accuracy' : "No Data Found"} 
                 </button>
                 
             </div>
@@ -188,15 +188,15 @@ const displayModalData = data =>{
             </div>
         </div>
     `
-    
+
 }
 // Spinner
-const toggleSpinner = isLoading =>{
+const toggleSpinner = isLoading => {
     const spinner = document.getElementById("loader");
-    if(isLoading){
+    if (isLoading) {
         spinner.classList.remove("d-none");
     }
-    else{
+    else {
         spinner.classList.add("d-none");
     }
 }
